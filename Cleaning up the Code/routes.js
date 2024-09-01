@@ -42,7 +42,7 @@ const requestHandler=(request,response)=> {
     response.end();
 }
 
-module.exports=requestHandler;
+//module.exports=requestHandler;
 
 // module.exports={
 //     handler:requestHandler,
@@ -52,5 +52,5 @@ module.exports=requestHandler;
 // module.exports.handler=requestHandler;
 // module.exports.someText="Some Hard Coded Text";
 
-// exports.handler=requestHandler;
-// exports.someText="Some Hard Coded Text";
+exports.handler=requestHandler;
+exports.someText="Some Hard Coded Text";
