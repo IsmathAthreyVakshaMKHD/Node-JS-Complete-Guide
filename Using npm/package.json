@@ -1,0 +1,16 @@
+{
+  "name": "using-npm",
+  "version": "1.0.0",
+  "description": "Complete Node.js Guide",
+  "main": "applications.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon applications.js",
+    "start-server": "node applications.js"
+  },
+  "author": "Ismath AthreyVaksha",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
