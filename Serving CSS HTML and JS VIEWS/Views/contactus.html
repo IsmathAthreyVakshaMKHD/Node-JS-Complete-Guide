@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/add-product.css">
+    <link rel="stylesheet" href="/css/contactus.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"> <a href="/">Shop</a></li>
+                <li class="main-header__item"> <a href="/admin/add-product">Add Product</a></li>
+                <li class="main-header__item"> <a class="active" href="/admin/contactus">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form class="contactus-form" action="/admin/success" method="POST">
+            <div class="form-control">
+                <label for="givenName">Name: </label><br>
+                <input type="text" name="givenName" id="givenName" required><br>
+                <label for="givenMail">Email:</label><br>
+                <input type="email" name="givenMail" id="givenMail" required><br>
+            </div>
+            <button type="submit">Book A Call</button>
+        </form>
+    </main>
+</body>
+</html>
