@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <link rel="stylesheet" href="/css/product-list.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/add-product.css">
     <link rel="stylesheet" href="/css/contactus.css">
@@ -13,6 +14,7 @@
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
                 <li class="main-header__item"> <a href="/">Shop</a></li>
+                <li class="main-header__item"> <a href="/admin/product-list">Product List</a></li>
                 <li class="main-header__item"> <a class="active" href="/admin/add-product">Add Product</a></li>
                 <li class="main-header__item"> <a href="/admin/contactus">Contact Us</a></li>
             </ul>
@@ -23,6 +25,12 @@
             <div class="form-control">
                 <label for="title">Title</label>
                 <input type="text" name="title" id="title">
+                <label for="image-url">Image URL</label>
+                <input type="url" name="image-url" id="image-url">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5" cols="38"></textarea>
             </div>
             <button type="submit">Add Product</button>
         </form>

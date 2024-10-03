@@ -1,0 +1,36 @@
+body{
+    /* max-width: 800px; */
+    margin: 0 auto; /* Centers the product details on the page */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center; /* Center-align the content */
+}
+/* If the body css only commentended out the results are the same */
+body img{
+    max-width:200px;
+    height:auto;
+}
+body h1{
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+body p{
+    font-size: 1rem;
+    color: #555;
+}
+body form button{
+    padding: 10px 20px;
+    background-color: #dbc441;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+body form button:hover{
+    background-color: #bfa936;
+}

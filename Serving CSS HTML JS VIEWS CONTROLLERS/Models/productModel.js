@@ -1,3 +1,76 @@
+//Model 2
+const fs=require('fs');
+const path=require('path');
+const p=path.join(path.dirname(require.main.filename),'Data','productList.json');//Second argument is folder name & Third argument is filename with type
+const getProductsFromFile=callback=>{
+  fs.readFile(p,(err,fileContent)=>{
+    if(err||fileContent.length<0){
+      return callback([]);
+    }
+    else{
+      return callback(JSON.parse(fileContent));
+    }
+  })
+}
+module.exports=class Product{
+    constructor(item){//The resultant json objects will hold the same keys name as defined in the constructor
+        this.title=item.title;
+        this.imageUrl=item['image-url'];/*Brackets are required for hyphenated names and it is called Dynamic Key Access*/
+        this.price=item.price;
+        this.description=item.description;
+    }
+    save(){
+      this.id=Math.random().toString();
+      getProductsFromFile(dataArr=>{
+        dataArr.push(this);
+            fs.writeFile(p,JSON.stringify(dataArr),err=>{
+                console.log("Error =>"+err);
+            });
+      })
+      //Above code is a refracted version of the below code which involes adding a anonymous function 
+        // fs.readFile(p,(err,fileContent)=>{
+        //     let dataArr=[];
+        //     if(!err&&fileContent.length>0){
+        //         try{
+        //             dataArr=JSON.parse(fileContent);
+        //         }
+        //         catch(parseError){
+        //             console.error('Error parsing JSON : '+parseError);
+        //         }
+        //     }
+        //     dataArr.push(this);
+        //     fs.writeFile(p,JSON.stringify(dataArr),err=>{
+        //         console.log("Error =>"+err);
+        //     });
+        // })
+    }
+    static fetchAll(callback){
+      getProductsFromFile(callback);
+      //Above code is refracted version of the below code
+        // fs.readFile(p,(err,fileContent)=>{
+        //     if(err){
+        //         return callback([]);
+        //     }
+        //     if(fileContent.length===0){
+        //         return callback([]);
+        //     }
+            // try{
+                // const currentList=JSON.parse(fileContent);
+                // callback(currentList);
+            // }
+            // catch(parseError){
+            //     console.error('Error parsing json : '+parseError);
+            //     callback([]);
+            // }
+        // })
+    }
+    static findById(id,callback){
+      getProductsFromFile(productListing=>{
+        const foundProduct=productListing.find(listing=> listing.id===id);
+        callback(foundProduct);
+      })
+    }
+}
 //Own logic
 // const fs=require('fs');
 // //const productArr=[];
@@ -54,69 +127,6 @@
 //         ));
 //     }
 // }
-//Model 2
-const fs=require('fs');
-const path=require('path');
-const p=path.join(path.dirname(require.main.filename),'Data','productList.json');//Second argument is folder name & Third argument is filename with type
-const getProductsFromFile=callback=>{
-  fs.readFile(p,(err,fileContent)=>{
-    if(err||fileContent.length<0){
-      return callback([]);
-    }
-    else{
-      return callback(JSON.parse(fileContent));
-    }
-  })
-}
-module.exports=class Product{
-    constructor(item){
-        this.title=item;
-    }
-    save(){
-      getProductsFromFile(dataArr=>{
-        dataArr.push(this);
-            fs.writeFile(p,JSON.stringify(dataArr),err=>{
-                console.log("Error =>"+err);
-            });
-      })
-      //Above code is a refracted version of the below code which involes adding a anonymous function 
-        // fs.readFile(p,(err,fileContent)=>{
-        //     let dataArr=[];
-        //     if(!err&&fileContent.length>0){
-        //         try{
-        //             dataArr=JSON.parse(fileContent);
-        //         }
-        //         catch(parseError){
-        //             console.error('Error parsing JSON : '+parseError);
-        //         }
-        //     }
-        //     dataArr.push(this);
-        //     fs.writeFile(p,JSON.stringify(dataArr),err=>{
-        //         console.log("Error =>"+err);
-        //     });
-        // })
-    }
-    static fetchAll(callback){
-      getProductsFromFile(callback);
-      //Above code is refracted version of the below code
-        // fs.readFile(p,(err,fileContent)=>{
-        //     if(err){
-        //         return callback([]);
-        //     }
-        //     if(fileContent.length===0){
-        //         return callback([]);
-        //     }
-            // try{
-                // const currentList=JSON.parse(fileContent);
-                // callback(currentList);
-            // }
-            // catch(parseError){
-            //     console.error('Error parsing json : '+parseError);
-            //     callback([]);
-            // }
-        // })
-    }
-}
 //Model 3
 // const fs = require('fs');
 // const path = require('path');

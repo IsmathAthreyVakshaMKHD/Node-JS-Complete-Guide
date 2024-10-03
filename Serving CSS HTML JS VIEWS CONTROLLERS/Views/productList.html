@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
+    <title>Product Lists</title>
     <link rel="stylesheet" href="/css/product-list.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/add-product.css">
-    <link rel="stylesheet" href="/css/contactus.css">
+    <link rel="stylesheet" href="/css/contactus.css">    
 </head>
 <body>
     <header class="main-header">
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
-                <li class="main-header__item"> <a class="active" href="/">Shop</a></li>
-                <li class="main-header__item"> <a href="/admin/product-list">Product List</a></li>
+                <li class="main-header__item"> <a href="/">Shop</a></li>
+                <li class="main-header__item"> <a class="active" href="/admin/product-list">Product List</a></li>
                 <li class="main-header__item"> <a href="/admin/add-product">Add Product</a></li>
                 <li class="main-header__item"> <a href="/admin/contactus">Contact Us</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>My Products</h1>
-        <p>List of all the products...</p>
+        <div id="product-list-container">
+            <!-- PRODUCTS_PLACEHOLDER -->
+        </div>
     </main>
 </body>
 </html>

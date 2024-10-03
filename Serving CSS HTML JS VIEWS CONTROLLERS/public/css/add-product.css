@@ -56,6 +56,11 @@ main{
     border-radius: 2px;
     font:inherit;
 }
+.form-control textarea{
+    border: 1px solid #dbc441;/*rgb(0, 0, 0);*//*CopyPaste from form-control input*/
+    border-radius: 2px;
+    font:inherit;
+}
 button{
     font:inherit;
     border: 1px solid #3e00a1;/*purple*/
