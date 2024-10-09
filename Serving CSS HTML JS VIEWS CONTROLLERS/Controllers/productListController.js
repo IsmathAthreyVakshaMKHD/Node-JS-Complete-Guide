@@ -22,6 +22,8 @@ exports.getProductLists=((request,response,next)=>
                     <a href="/admin/product-list/${currentProduct.id}" class="btn" type="submit">Details</a>
                     <form action="/admin/add-to-cart" method="POST">
                     <button class="btn">Add to Cart</button>
+                    <input type="hidden" name="cartProductId" value="${currentProduct.id}">
+                    </form>
                 </div>
                 `;
             })
@@ -31,6 +33,7 @@ exports.getProductLists=((request,response,next)=>
         // response.sendFile(path.join(rootDir,'Views','productList.html'));    
     })
 })
+//This can also be done using response.render() learn it
 exports.getProductId=((request,response,next)=>
 {
     const currentProductId=request.params.productId;
@@ -50,8 +53,9 @@ exports.getProductId=((request,response,next)=>
             <img src="${receivedProduct.imageUrl}" alt="${receivedProduct.title}">
             <p>$${receivedProduct.price}</p>
             <p>${receivedProduct.description}</p>
-            <form action="add-to-cart" method="POST">
+            <form action="/admin/add-to-cart" method="POST">
             <button type="submit">Add to Cart</button>
+            <input type="hidden" name="cartProductId" value="${receivedProduct.id}">
             </form>
             `;
             const fullProductDetailsHtml=template.replace('<!-- PRODUCT_DETAILS_PLACEHOLDER -->',productDetailsHtml);
