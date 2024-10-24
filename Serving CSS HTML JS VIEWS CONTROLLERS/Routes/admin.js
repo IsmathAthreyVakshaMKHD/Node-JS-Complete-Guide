@@ -4,5 +4,8 @@ const rootDir=require('../utilPath/pathFile');
 const router=express.Router();
 const productController=require('../Controllers/productController');
 router.get('/add-product',productController.getProducts);
+router.get('/edit-product/:productId',productController.editProducts);
 router.post('/add-product',productController.postProducts);
+router.post('/edit-product',productController.postEditProducts);
+router.post('/delete-product',productController.postDeleteProducts);
 module.exports=router;

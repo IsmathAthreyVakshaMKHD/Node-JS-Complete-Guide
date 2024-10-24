@@ -20,12 +20,21 @@ exports.getProductLists=((request,response,next)=>
                     <p>Price: $${currentProduct.price}</p>
                     <p>${currentProduct.description}</p>
                     <a href="/admin/product-list/${currentProduct.id}" class="btn" type="submit">Details</a>
+                    <form action="/admin/edit-product/${currentProduct.id}" method="GET"> 
+                    <input type="hidden" name="edit" value="true">
+                    <button type="submit" class="btn">Edit</button>
+                    </form>
+                    <form action="/admin/delete-product" method="POST">
+                    <input type="hidden" name="deleteId" value="${currentProduct.id}">
+                    <button type="submit" class="btn">Delete</button>
+                    </form>
                     <form action="/admin/add-to-cart" method="POST">
                     <button class="btn">Add to Cart</button>
                     <input type="hidden" name="cartProductId" value="${currentProduct.id}">
                     </form>
                 </div>
                 `;
+                //When the query string is given directly like this action="/admin/edit-product/${currentProduct.id}?edit=true" causes error and the given query string is not recognized
             })
             const fullProductListHtml=template.replace('<!-- PRODUCTS_PLACEHOLDER -->',productListHtml);
             response.send(fullProductListHtml);
