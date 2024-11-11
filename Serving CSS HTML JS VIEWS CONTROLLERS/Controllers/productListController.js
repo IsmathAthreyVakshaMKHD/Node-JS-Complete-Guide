@@ -1,22 +1,22 @@
+const productClass=require('../Models/productModel');
 const path=require('path');
 const rootDir=require('../utilPath/pathFile');
 const fs=require('fs');
-// const productListClass=require('../Models/productListModel');
-const productClass=require('../Models/productModel');
 exports.getProductLists=((request,response,next)=>
 {
-    productClass.fetchAll((fetchedProducts)=>{
+    productClass.fetchAll()
+    .then(([fetchedArr])=>{
         fs.readFile(path.join(rootDir,'Views','productList.html'),'utf-8',(error,template)=>{
             if(error){
                 console.log('Error reading templete =>',error);
                 return response.status(500).send('Server Error');
             }
             let productListHtml='';
-            fetchedProducts.forEach(currentProduct=>{
+            fetchedArr.forEach(currentProduct=>{
                 productListHtml+=`
                 <div class="product">
                     <h2>${currentProduct.title}</h2>
-                    <img src="${currentProduct.imageUrl}" alt="${currentProduct.title}">
+                    <img src="${currentProduct.imageUrl || currentProduct.imageurl}" alt="${currentProduct.title}">
                     <p>Price: $${currentProduct.price}</p>
                     <p>${currentProduct.description}</p>
                     <a href="/admin/product-list/${currentProduct.id}" class="btn" type="submit">Details</a>
@@ -39,38 +39,39 @@ exports.getProductLists=((request,response,next)=>
             const fullProductListHtml=template.replace('<!-- PRODUCTS_PLACEHOLDER -->',productListHtml);
             response.send(fullProductListHtml);
         })
-        // response.sendFile(path.join(rootDir,'Views','productList.html'));    
+    })
+    .catch((err)=>{
+        console.log('getProductLists.findById error in productListController =>',err);
     })
 })
 //This can also be done using response.render() learn it
 exports.getProductId=((request,response,next)=>
 {
     const currentProductId=request.params.productId;
-    //console.log(currentProductId);
-    productClass.findById(currentProductId,receivedProduct=>{
-        if(!receivedProduct){
-            response.status(404).send('Product not found');
-        }
+    productClass.findById(currentProductId)
+    .then(([returnedArr])=>{//This is same as the first arguments rows refer the productController
+        console.log('Returned products from productListController =>',returnedArr[0]);
         fs.readFile(path.join(rootDir,'Views','productDetails.html'),'utf-8',(error,template)=>{
             if(error){
                 console.log('Error Reading temnplate =>',error);
                 response.status(500).send('Server Error 2');
             }
             let productDetailsHtml=`
-            <h1>${receivedProduct.title}<h1>
-            <hr>
-            <img src="${receivedProduct.imageUrl}" alt="${receivedProduct.title}">
-            <p>$${receivedProduct.price}</p>
-            <p>${receivedProduct.description}</p>
-            <form action="/admin/add-to-cart" method="POST">
-            <button type="submit">Add to Cart</button>
-            <input type="hidden" name="cartProductId" value="${receivedProduct.id}">
-            </form>
-            `;
-            const fullProductDetailsHtml=template.replace('<!-- PRODUCT_DETAILS_PLACEHOLDER -->',productDetailsHtml);
-            response.send(fullProductDetailsHtml);
+                <h1>${returnedArr[0].title}<h1>
+                <hr>
+                <img src="${returnedArr[0].imageUrl || returnedArr[0].imageurl}" alt="${returnedArr[0].title}">
+                <p>$${returnedArr[0].price}</p>
+                <p>${returnedArr[0].description}</p>
+                <form action="/admin/add-to-cart" method="POST">
+                <button type="submit">Add to Cart</button>
+                <input type="hidden" name="cartProductId" value="${returnedArr[0].id}">
+                </form>
+                `;
+                const fullProductDetailsHtml=template.replace('<!-- PRODUCT_DETAILS_PLACEHOLDER -->',productDetailsHtml);
+                response.send(fullProductDetailsHtml);
         })
-        console.log(receivedProduct);
     })
-    //response.redirect('/');
+    .catch((err)=>{
+        console.log('findById error in productListController =>',err);
+    })
 })

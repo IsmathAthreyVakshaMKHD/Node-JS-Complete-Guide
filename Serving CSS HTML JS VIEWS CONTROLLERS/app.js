@@ -10,7 +10,14 @@ const successRouter=require('./Routes/success');
 const errorController=require('./Controllers/errorController');
 const productListRouter=require('./Routes/productList');
 const cartRouter=require('./Routes/cart');
-const db=require('./util/database');
+// const db=require('./utilPath/database');
+// db.execute('SELECT * FROM products') //Sample Code
+// .then((result)=>{
+//     console.log('Retreived Database',result);
+// })
+// .catch((error)=>{
+//     console.log('Retrieval Error',error);
+// })
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/admin',adminRouter);

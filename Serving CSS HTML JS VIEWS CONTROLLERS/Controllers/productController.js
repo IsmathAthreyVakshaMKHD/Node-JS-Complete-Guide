@@ -4,26 +4,32 @@ const fs=require('fs');
 const productClass=require('../Models/productModel');
 exports.getProducts=(request,response,next)=>
 {
-    //const currentProduct=productClass.fetchAll(); //This is done using array
-    productClass.fetchAll((fetchedProducts)=>{
-        console.log("Fetched products are : "+`\n`+ JSON.stringify(fetchedProducts));
+    productClass.fetchAll()
+    .then(([rows,fieldData])=>{
+        // console.log("Fetched products are : "+`\n`+ JSON.stringify(rows));
         response.sendFile(path.join(rootDir,'Views','add-product.html'));
     })
-    //response.sendFile(path.join(rootDir,'Views','add-product.html'));
+    .catch((err)=>{
+        console.log("getProducts FetchAll() error =>",err);
+    })
 }
 exports.postProducts=(request,response,next)=>
 {
-    //Here we are creating a new instance of the Product class to pass the values to the save method and keys used here will not appear in the final resultant json objects
     const currentProduct=new productClass({
         id:null,
         title:request.body.title,
-        'image-url':request.body['image-url'],//The key for this need to match the one we are using in the contructor for example we using this['image-url'] as a key to value but when we a instance with the key something like imageurl or imageUrl this key is not mentioned in the constructor and this['image-url'] we have used gives as undefined which is why it is not displayed in the resultant json object when different key name are used for the instance creation
+        'image-url':request.body['image-url'],
         price:request.body.price,
         description:request.body.description
         });
-    currentProduct.save();
-    //console.log(request.body.title);
-    response.redirect('/');
+    currentProduct.save()
+    .then(()=>{
+        response.redirect('/');
+    })
+    .catch(err=>{
+        console.log('postProducts error',err);
+    });
+    
 }
 exports.editProducts=(request,response,next)=>
 {
@@ -83,13 +89,11 @@ exports.postEditProducts=(request,response,next)=>
 exports.postDeleteProducts=(request,response,next)=>
 {
     const productId=request.body.deleteId;
-    productClass.deleteProductById(productId,(success)=>
-    {
-        if(success){
-            response.redirect('/admin/product-list');
-        }
-        else{
-            response.status(500).send('Error deleting product');
-        }
-    });
+    productClass.deleteProductById(productId)
+    .then(()=>{
+        response.redirect('/admin/product-list');
+    })
+    .catch((err)=>{
+        response.status(500).send('Error deleting product');
+    })
 };
