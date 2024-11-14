@@ -31,8 +31,8 @@ app.use('/',errorController.getError);
 sequelizeDb.sync()
 .then(result=>{
     // console.log(' sequelizeDb sync result =>',result);
+    app.listen(3000);
 })
 .catch(err=>{
     console.log(' sequelizeDb sync error =>',err);
 })
-app.listen(3000);
