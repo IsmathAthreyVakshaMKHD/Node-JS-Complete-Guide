@@ -4,11 +4,14 @@ const productDefinition=sequelizeDb.define('productDB',
 {
     id:{
         type:sequelizeOrm.INTEGER,
-        autoincrement:false,
+        autoIncrement:true,
         allowNull:false,
         primaryKey:true
     },
-    title:sequelizeOrm.STRING,
+    title:{
+        type:sequelizeOrm.STRING,
+        allowNull:false
+    },    
     imageurl:{
         type:sequelizeOrm.STRING,
         allowNull:false

@@ -4,8 +4,8 @@ const rootDir=require('../utilPath/pathFile');
 const fs=require('fs');
 exports.getProductLists=((request,response,next)=>
 {
-    productClass.fetchAll()
-    .then(([fetchedArr])=>{
+    productClass.findAll()
+    .then(fetchedArr=>{
         fs.readFile(path.join(rootDir,'Views','productList.html'),'utf-8',(error,template)=>{
             if(error){
                 console.log('Error reading templete =>',error);
@@ -40,31 +40,59 @@ exports.getProductLists=((request,response,next)=>
             response.send(fullProductListHtml);
         })
     })
-    .catch((err)=>{
+    .catch(err=>{
         console.log('getProductLists.findById error in productListController =>',err);
-    })
+    });
 })
 //This can also be done using response.render() learn it
 exports.getProductId=((request,response,next)=>
 {
     const currentProductId=request.params.productId;
-    productClass.findById(currentProductId)
-    .then(([returnedArr])=>{//This is same as the first arguments rows refer the productController
-        console.log('Returned products from productListController =>',returnedArr[0]);
+    // This method is using querying
+    // productClass.findAll({where:{id:currentProductId}})
+    // .then(returnedArr=>{
+    //     console.log('Returned products from productListController =>',returnedArr[0]);
+    //     fs.readFile(path.join(rootDir,'Views','productDetails.html'),'utf-8',(error,template)=>{
+    //         if(error){
+    //             console.log('Error Reading temnplate =>',error);
+    //             response.status(500).send('Server Error 2');
+    //         }
+    //         let productDetailsHtml=`
+    //             <h1>${returnedArr[0].title}<h1>
+    //             <hr>
+    //             <img src="${returnedArr[0].imageUrl || returnedArr[0].imageurl}" alt="${returnedArr[0].title}">
+    //             <p>$${returnedArr[0].price}</p>
+    //             <p>${returnedArr[0].description}</p>
+    //             <form action="/admin/add-to-cart" method="POST">
+    //             <button type="submit">Add to Cart</button>
+    //             <input type="hidden" name="cartProductId" value="${returnedArr[0].id}">
+    //             </form>
+    //             `;
+    //             const fullProductDetailsHtml=template.replace('<!-- PRODUCT_DETAILS_PLACEHOLDER -->',productDetailsHtml);
+    //             response.send(fullProductDetailsHtml);
+    //     })
+    // })
+    // .catch(err=>{
+    //     console.log('findById error in productListController =>',err);
+    // });
+
+    productClass.findByPk(currentProductId)
+    .then((returnedArr)=>{//This is same as the first arguments rows refer the productController
+        console.log('Returned products from productListController =>',returnedArr);
         fs.readFile(path.join(rootDir,'Views','productDetails.html'),'utf-8',(error,template)=>{
             if(error){
                 console.log('Error Reading temnplate =>',error);
                 response.status(500).send('Server Error 2');
             }
             let productDetailsHtml=`
-                <h1>${returnedArr[0].title}<h1>
+                <h1>${returnedArr.title}<h1>
                 <hr>
-                <img src="${returnedArr[0].imageUrl || returnedArr[0].imageurl}" alt="${returnedArr[0].title}">
-                <p>$${returnedArr[0].price}</p>
-                <p>${returnedArr[0].description}</p>
+                <img src="${returnedArr.imageUrl || returnedArr.imageurl}" alt="${returnedArr.title}">
+                <p>$${returnedArr.price}</p>
+                <p>${returnedArr.description}</p>
                 <form action="/admin/add-to-cart" method="POST">
                 <button type="submit">Add to Cart</button>
-                <input type="hidden" name="cartProductId" value="${returnedArr[0].id}">
+                <input type="hidden" name="cartProductId" value="${returnedArr.id}">
                 </form>
                 `;
                 const fullProductDetailsHtml=template.replace('<!-- PRODUCT_DETAILS_PLACEHOLDER -->',productDetailsHtml);
