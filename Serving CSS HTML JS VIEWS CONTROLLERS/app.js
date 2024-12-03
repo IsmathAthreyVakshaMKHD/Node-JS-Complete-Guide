@@ -1,6 +1,6 @@
-const express=require('express');
 const path=require('path');
 const rootDir=require('./utilPath/pathFile');
+const express=require('express');
 const app=express();
 const bodyParser=require('body-parser');
 const adminRouter=require('./Routes/admin');

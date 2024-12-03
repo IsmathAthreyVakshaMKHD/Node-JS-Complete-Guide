@@ -1,0 +1,11 @@
+const express=require('express');
+const path=require('path');
+const rootDir=require('../utilPath/pathFile');
+const router=express.Router();
+const bookingController=require('../Controllers/bookingController');
+router.get('/book-appointment',bookingController.getUser);
+router.get('/edit-user/:userId',bookingController.editUser);
+router.post('/edit-user/:userId',bookingController.postEditUser);
+router.post('/book-appointment',bookingController.postUser);
+router.post('/delete-user',bookingController.postDeleteUser);
+module.exports=router;
