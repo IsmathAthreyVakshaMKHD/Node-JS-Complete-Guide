@@ -5,7 +5,7 @@ const app=express();
 const bodyParser=require('body-parser');
 const sequelizeDb=require('./utilPath/database');
 const adminRouter=require('./Routes/admin');
-const bookingModelRouter=require('./Model/bookingModel');
+const bookingModelRouter=require('./Model/bookingModel');//May be not needed check it
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/admin',adminRouter);
 sequelizeDb.sync()

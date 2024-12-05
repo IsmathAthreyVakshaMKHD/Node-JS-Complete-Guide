@@ -14,11 +14,13 @@ const bookingDefinition=sequelizeDb.define('user',
         },
         phonenumber:{
             type:sequelizeOrm.STRING,
-            allowNull:false
+            allowNull:false,
+            unique:true
         },
         emailid:{
             type:sequelizeOrm.STRING,
-            allowNull:false
+            allowNull:false,
+            unique:true
         }
 });
 module.exports=bookingDefinition;
